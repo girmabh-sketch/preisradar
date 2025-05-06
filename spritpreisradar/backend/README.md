@@ -3,7 +3,7 @@
 + Backend System
 
 > Developed with NestJS - a framework for building efficient, scalable Node.js server-side applications.
-> The project uses node.js version 20.17.0.
+> The project uses node.js version 22.15.0.
 
 + Database System
 
@@ -51,4 +51,4 @@ $ npm run start:prod
 
 ## Test Backend Application with Swagger
 
-+ Open browser and provide the url - `http://localhost:3000/api`
++ Open browser and provide the url - `http://localhost:60111/api`
