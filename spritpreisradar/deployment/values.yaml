@@ -1,0 +1,48 @@
+adminer:
+  app:
+    name: spritpreisradar-dbviewer
+    servicename: spritpreisradar-dbviewer-service
+    port: 60113
+    environment: production
+  env:
+    node_env: development
+
+backend:
+  app:
+    name: spritpreisradar-backend
+    servicename: spritpreisradar-backend-service
+    port: 60111
+    environment: production
+    image: registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/backend:main
+    imagePullPolicy: Always
+    replicaCount: 1
+
+db:
+  app:
+    name: spritpreisradar-db
+    image: registry.gitlab.pascada.net/inhouse/infrastructure/trusted-container-image/postgres:v1.17-b1
+    servicename: spritpreisradar-db-service
+    servicePort: 5432
+    port: 60111
+    environment: production
+    hostPath: /opt/postgres-data/spritpreisradar-dev
+    hostSubdir: main
+    pvName: postgres-pv-volume
+    pvcName: postgres-pv-claim
+    storageSize: 10Mi
+    replicaCount: 1
+  env:
+    dbname: spritpreisradar
+    dbusername: pascada
+    dbpassword: geheim
+
+frontend:
+  app:
+    name: spritpreisradar-frontend
+    servicename: spritpreisradar-frontend-service
+    appUrl: dev.spritpreisradar.testcenter.pascada.net/
+    environment: production
+    image: registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/frontend:main
+    imagePullPolicy: Always
+    replicaCount: 1
+    port: 60110

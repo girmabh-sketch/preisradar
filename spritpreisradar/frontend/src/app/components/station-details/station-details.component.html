@@ -1,0 +1,21 @@
+<pas-card class="pas-station-detail-card">
+  <pas-card>
+    <spr-map [adresse]="stationDetails.address"></spr-map>
+  </pas-card>
+  <pas-card class="p-3">
+    <h1>{{ stationDetails.brand }}</h1>
+    <hr/>
+  </pas-card>
+  <pas-card class="p-3">
+    <span>{{ stationDetails.address.streetName }} {{ stationDetails.address.streetNumber }}</span><br>
+    <span>{{ stationDetails.address.postalCode }} {{ stationDetails.address.city }}</span>
+  </pas-card>
+  <spr-fuel-price [prices]="prices"></spr-fuel-price>
+  <spr-opening-times [openingTimes]="stationDetails.openingTimes"></spr-opening-times>
+</pas-card>
+<pas-card class="pas-station-detail-card">
+  <hr/>
+  <pas-card>
+      <spr-station-complaint [stationId]="stationDetails.stationId"></spr-station-complaint>
+  </pas-card>
+</pas-card>

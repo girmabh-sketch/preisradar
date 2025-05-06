@@ -1,0 +1,22 @@
+{
+  "name": "@pascada/spritpreisradar",
+  "version": "1.0.0",
+  "description": "PASCADA Spritpreisradar Website",
+  "main": "index.js",
+  "scripts": {
+    "docker:build:backend": "docker buildx build --provenance=false --platform linux/amd64,linux/arm64 --push -t registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/backend:latest -f backend/Dockerfile backend",
+    "docker:build:backend2": "docker build -t registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/backend:latest -f backend/Dockerfile backend",
+    "docker:push:backend": "docker push registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/backend:latest",
+    "docker:build:frontend": "docker buildx build --provenance=false --platform linux/amd64,linux/arm64 --push -t registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/frontend:latest -f frontend/Dockerfile frontend",
+    "docker:build:frontend2": "docker build -t registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/frontend:latest -f frontend/Dockerfile frontend",
+    "docker:push:frontend": "docker push registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/frontend:latest",
+    "helm:lokal": "helm install spritpreisradar deployment",
+    "start:db": "cd database && docker-compose up -d && cd .."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar.git"
+  },
+  "author": "Epaphras Manaen Ndayisenga",
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.backend.app.name }}
+  labels:
+    name: {{ .Values.backend.app.name }}
+spec:
+  replicas: {{ .Values.backend.app.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.backend.app.name }}
+      name: {{ .Values.backend.app.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.backend.app.name }}
+        name: {{ .Values.backend.app.name }}
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: {{ .Values.backend.app.name }}
+          image: {{ .Values.backend.app.image }}
+          imagePullPolicy: {{ .Values.backend.app.imagePullPolicy }}
+          ports:
+            - containerPort: 60111
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 60111
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 60111
+          env:
+            - name: PORT
+              value: "60111"
+            - name: DB_DATABASE
+              value: {{ .Values.db.env.dbname }}
+            - name: DB_USERNAME
+              value: {{ .Values.db.env.dbusername }}
+            - name: DB_PASSWORD
+              value: {{ .Values.db.env.dbpassword }}
+            - name: NODE_ENV
+              value: development
+            - name: DB_HOST
+              value: {{ .Values.db.app.servicename }}
+            - name: DB_PORT
+              value: "{{ .Values.db.app.servicePort }}"
+#          resources:
+#            requests:
+#              memory: "256Mi"
+#              cpu: "300m"
+#            limits:
+#              memory: "256Mi"
+#              cpu: "300m"
+

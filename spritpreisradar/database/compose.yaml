@@ -1,0 +1,33 @@
+# Mit dieser Docker-Compose-Datei kann eine Postgres-Datenbank lokal unter Port 5432 (Standard Postgres)
+# gestartet werden, um sie in der lokalen Entwicklung des Backends zu verwenden.
+
+# Starten mit
+#  docker-compose up -d
+services:
+  spritpreisradar-postgres:
+    image: registry.gitlab.pascada.net/inhouse/infrastructure/trusted-container-image/postgres:v1.17-b1
+    restart: always
+    environment:
+      POSTGRES_USER: pascada
+      POSTGRES_PASSWORD: geheim
+      POSTGRES_DB: spritpreisradar
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  spritpreisradar-pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: abc123
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    ports:
+      - '5431:80'
+    depends_on:
+      - spritpreisradar-postgres
+
+#volumes:
+#  postgres:

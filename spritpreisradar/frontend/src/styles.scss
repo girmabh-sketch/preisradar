@@ -1,0 +1,88 @@
+// Anpassen der Bootstrap-Variablen
+
+$spacer: 20px;
+$border-radius: 5px;
+$primary: #00a3ff;
+$secondary: #e6a01f;
+$success: #28a745;
+
+$blue: rgb(57, 186, 236);
+
+// Bootstrap importieren
+@import 'bootstrap/scss/bootstrap';
+
+.navbar-brand {
+  // 20px Abstand zum linken Rand
+  padding-left: $spacer;
+}
+
+.failure-line {
+  background-color: red;
+}
+
+.CodeMirror.cm-s-material {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100vh - 400px);
+}
+
+.failed {
+  color: #e74c3c;
+}
+
+.passed {
+  color: #1abb9c;
+}
+
+.fa-check-circle:before {
+  content: '\f058';
+}
+
+.fa-exclamation-circle:before {
+  content: '\f06a';
+}
+
+.pas-station-detail-card .card {
+  border-color: transparent;
+}
+
+pas-navbar nav.navbar .navbar-brand img {
+  height: 4rem;
+}
+
+/* SPRIT-22
+   Workaround mit !important,
+   -da Theming d. Marlene-Komponenten mithilfe der Bootstrap-Variablen (noch) nicht zieht.- NEIN
+   da in bootstrap/scss/mixins/_utilities.scss auch !important verwendet wird.
+ */
+spr-root pas-navbar .navbar {
+  background-color: white !important;
+}
+
+pas-navbar nav.navbar [role=menubar] .nav-item .nav-link {
+  color: rgb(75, 79, 88);
+  font-weight: 400;
+}
+
+/*
+Gibt momentan keine nav-link Elemente
+pas-navbar nav.navbar [role=menubar] .nav-item .nav-link:hover {
+  color: $blue;
+  font-weight: 400;
+}
+
+pas-navbar nav.navbar [role=menubar] .nav-item .nav-link.active {
+  color: $blue;
+}
+*/
+
+:root {
+  font-family: Verdana, Helvetica, Arial, sans-serif !important;
+  font-weight: 400 !important;
+}
+
+body {
+  font-family: Verdana, Helvetica, Arial, sans-serif !important;
+  font-weight: 400 !important;
+}

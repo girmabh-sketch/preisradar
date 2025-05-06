@@ -1,0 +1,10 @@
+node_modules
+
+database/data
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Daten d. lokalen Postgres ignorieren
+/database/data

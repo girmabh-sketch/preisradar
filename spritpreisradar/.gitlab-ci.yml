@@ -1,0 +1,194 @@
+variables:
+  CLI_VERSION: 8.3.3
+  BACKEND_IMAGE_TAG: $CI_REGISTRY_IMAGE/backend:$CI_COMMIT_REF_SLUG
+  FRONTEND_IMAGE_TAG: $CI_REGISTRY_IMAGE/frontend:$CI_COMMIT_REF_SLUG
+  # PASCADA Kubernetes Cluster
+  DEPLOY_SRV: "172.17.5.110"
+  DEPLOY_USER: service_user
+  DEPLOY_DIR: /opt/spritpreisradar
+  # Die Namespaces und URLs werden nur im master-Branch verwendet, daher bitte NICHT anpassen
+  NAME_SPACE_DEV: spritpreisradar-dev
+  NAME_SPACE_TEST: spritpreisradar-test
+  NAME_SPACE_DEMO: spritpreisradar-demo
+  URL_DEV: dev.spritpreisradar.testcenter.pascada.net
+  URL_TEST: test.spritpreisradar.testcenter.pascada.net
+  URL_DEMO: demo.spritpreisradar.testcenter.pascada.net
+  RELEASE_NAME: spritpreisradar
+  DOCKER_BUILDKIT: 1
+
+stages:
+  - build
+  - publish
+  - deploy
+
+build:backend:
+  stage: build
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - cd backend
+    - docker build --no-cache -t $BACKEND_IMAGE_TAG .
+  tags:
+    - shell-executor
+
+build:frontend:
+  stage: build
+  script:
+     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+     - cd frontend
+     - docker build --no-cache -t $FRONTEND_IMAGE_TAG .
+  tags:
+    - shell-executor
+
+publish:backend:
+  stage: publish
+# Wir publizieren alle Images in die GitLab Container Registry
+# Images aus Feature Branches werden automatisch nach 7 Tagen gelöscht, siehe
+# https://gitlab:pascada:net/customer/smf/petrolpricealarm/spritpreisradar/-/settings/packages_and_registries:
+#  only:
+#    - main
+#    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $BACKEND_IMAGE_TAG
+  tags:
+    - shell-executor
+
+publish:frontend:
+  stage: publish
+#  only:
+#    - main
+#    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker push $FRONTEND_IMAGE_TAG
+  tags:
+    - shell-executor
+
+
+deploy:dev:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    # PAS/BGE 20.09.2019 Abgewandelte Anleitung aus
+    # https://docs.gitlab.com/ee/ci/ssh_keys/#ssh-keys-when-using-the-docker-executor
+    # Konkrete Infos siehe https://redmine.pascada.net/issues/977
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$DEPLOY_USER_PRIVATE_KEY_FILE" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan $DEPLOY_SRV >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Namespace $NAME_SPACE_DEV, Release $RELEASE_NAME, Path $DEPLOY_DIR/${NAME_SPACE_DEV}, Url ${URL_DEV}"
+    # deploy all
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+            mkdir -p $DEPLOY_DIR/${NAME_SPACE_DEV}
+            &&
+            rm -rf $DEPLOY_DIR/${NAME_SPACE_DEV}/*
+          "
+    - scp -r deployment/* $DEPLOY_USER@$DEPLOY_SRV:$DEPLOY_DIR/${NAME_SPACE_DEV}
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+            helm uninstall $RELEASE_NAME
+              --namespace $NAME_SPACE_DEV --ignore-not-found
+            &&
+            mkdir -p /opt/postgres-data/$NAME_SPACE_DEV
+            &&
+            helm install $RELEASE_NAME $DEPLOY_DIR/${NAME_SPACE_DEV}
+              --namespace $NAME_SPACE_DEV --create-namespace
+              --set db.app.hostPath=/opt/postgres-data/$NAME_SPACE_DEV
+              --set db.app.pvName=${NAME_SPACE_DEV}-postgres-pv-volume
+              --set db.app.pvcName=${NAME_SPACE_DEV}-postgres-pv-claim
+              --set backend.app.image=$BACKEND_IMAGE_TAG
+              --set frontend.app.image=$FRONTEND_IMAGE_TAG
+              --set frontend.app.appUrl=${URL_DEV}
+          "
+
+deploy:test:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    # PAS/BGE 20.09.2019 Abgewandelte Anleitung aus
+    # https://docs.gitlab.com/ee/ci/ssh_keys/#ssh-keys-when-using-the-docker-executor
+    # Konkrete Infos siehe https://redmine.pascada.net/issues/977
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$DEPLOY_USER_PRIVATE_KEY_FILE" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan $DEPLOY_SRV >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Namespace $NAME_SPACE_TEST, Release $RELEASE_NAME, Path $DEPLOY_DIR/${NAME_SPACE_TEST}, Url ${URL_TEST}"
+    # deploy all on test
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+        mkdir -p $DEPLOY_DIR/${NAME_SPACE_TEST}
+        &&
+        rm -rf $DEPLOY_DIR/${NAME_SPACE_TEST}*
+      "
+    - scp -r deployment/* $DEPLOY_USER@$DEPLOY_SRV:$DEPLOY_DIR/${NAME_SPACE_TEST}
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+        helm uninstall $RELEASE_NAME
+          --namespace $NAME_SPACE_TEST --ignore-not-found
+        &&
+        helm install $RELEASE_NAME $DEPLOY_DIR/${NAME_SPACE_TEST}
+          --namespace $NAME_SPACE_TEST --create-namespace
+          --set db.app.hostPath=/opt/postgres-data/$NAME_SPACE_TEST
+          --set db.app.pvName=${NAME_SPACE_TEST}-postgres-pv-volume
+          --set db.app.pvcName=${NAME_SPACE_TEST}-postgres-pv-claim
+          --set backend.app.image=$BACKEND_IMAGE_TAG
+          --set frontend.app.image=$FRONTEND_IMAGE_TAG
+          --set frontend.app.appUrl=${URL_TEST}
+      "
+  when: manual
+  tags:
+    - shell-executor
+
+deploy:demo:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    # PAS/BGE 20.09.2019 Abgewandelte Anleitung aus
+    # https://docs.gitlab.com/ee/ci/ssh_keys/#ssh-keys-when-using-the-docker-executor
+    # Konkrete Infos siehe https://redmine.pascada.net/issues/977
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$DEPLOY_USER_PRIVATE_KEY_FILE" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan $DEPLOY_SRV >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Namespace $NAME_SPACE_DEMO, Release $RELEASE_NAME, Path $DEPLOY_DIR/${NAME_SPACE_DEMO}, Url ${URL_DEMO}"
+    # deploy all on demo
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+        mkdir -p $DEPLOY_DIR/${NAME_SPACE_DEMO}
+        &&
+        rm -rf $DEPLOY_DIR/${NAME_SPACE_DEMO}
+      "
+    - scp -r deployment/* $DEPLOY_USER@$DEPLOY_SRV:$DEPLOY_DIR/${NAME_SPACE_DEMO}
+    - ssh $DEPLOY_USER@$DEPLOY_SRV "
+        helm uninstall $RELEASE_NAME
+          --namespace $NAME_SPACE_DEMO --ignore-not-found
+        &&
+        helm install $RELEASE_NAME $DEPLOY_DIR/${NAME_SPACE_DEMO}
+          --namespace $NAME_SPACE_DEMO --create-namespace
+          --set db.app.hostPath=/opt/postgres-data/$NAME_SPACE_DEMO
+          --set db.app.pvName=${NAME_SPACE_DEMO}-postgres-pv-volume
+          --set db.app.pvcName=${NAME_SPACE_DEMO}-postgres-pv-claim
+          --set backend.app.image=$BACKEND_IMAGE_TAG
+          --set frontend.app.image=$FRONTEND_IMAGE_TAG
+          --set frontend.app.appUrl=${URL_DEMO}
+      "
+  when: manual
+  tags:
+    - shell-executor

@@ -1,0 +1,45 @@
+<pas-card class="pas-complaint-card">
+  <h3>MTS-K Beschwerde</h3>
+  <form role="form"
+        (ngSubmit)="onSubmit(complaintForm)"
+        autocomplete="off"
+        #complaintForm="ngForm">
+    <pas-col-layout [columnCount]="1">
+      <pas-form-control for="complaintType"
+                        pasCol1>
+        <select name="complaintType"
+                class="form-control custom-select w-auto"
+                [class.is-invalid]="nameInp.invalid && nameInp.touched"
+                [(ngModel)]="complaintData.complaintType"
+                #nameInp="ngModel"
+                required>
+          <option disabled selected
+                  [ngValue]="null">Bitte w&auml;hlen
+          </option>
+          @for (item of options; track item.value) {
+            <option [ngValue]='item.value'>{{ item.label }}</option>
+          }
+        </select>
+      </pas-form-control>
+      <pas-form-control for="message"
+                        pasCol1>
+        <div class="form-floating w-50">
+          <textarea name="message"
+                    class="form-control"
+                    [class.is-invalid]="nameInp2.invalid && nameInp2.touched"
+                    #nameInp2="ngModel"
+                    [(ngModel)]="complaintData.message"
+                    required>
+          </textarea>
+        </div>
+      </pas-form-control>
+    </pas-col-layout>
+    <button type="button"
+            class="btn btn-primary"
+            (click)="complaintForm.ngSubmit.emit()"
+            [disabled]="complaintForm.invalid"
+            pasBusy="submit">
+      Absenden
+    </button>
+  </form>
+</pas-card>

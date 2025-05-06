@@ -1,0 +1,362 @@
+{
+  "prices": [
+    {
+      "id": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "brand": "ARAL",
+      "price": "1.739",
+      "streetName": "Kirchhohl",
+      "streetNumber": "15",
+      "postalCode": 65207,
+      "city": "Wiesbaden",
+      "validFrom": "2025-01-13 14:00:01.195834"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "brand": "ESSO",
+      "price": "2.319",
+      "streetName": "BAB",
+      "streetNumber": "A3",
+      "postalCode": 65207,
+      "city": "Wiesbaden",
+      "validFrom": "2025-01-10 14:00:01.195834"
+    }
+  ],
+  "station-details": [
+    {
+      "id": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "brand": "ARAL",
+      "address": {
+        "streetName": "Kirchhohl",
+        "streetNumber": "15",
+        "latitude": 50.1329283,
+        "longitude": 8.2973274,
+        "postalCode": 65207,
+        "city": "Wiesbaden"
+      },
+      "prices": [
+        {
+          "name": "e5",
+          "price": 1.739
+        },
+        {
+          "name": "e10",
+          "price": 1.679
+        },
+        {
+          "name": "diesel",
+          "price": 1.679
+        }
+      ],
+      "openingTimes": [
+        {
+          "comment PASCADA": "Montag",
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 0,
+          "startTime": "07:00:00",
+          "endTime": "19:00:00"
+        },
+        {
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 1,
+          "startTime": "08:00:00",
+          "endTime": "19:00:00"
+        },
+        {
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 2,
+          "startTime": "09:00:00",
+          "endTime": "19:00:00"
+        },
+        {
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 3,
+          "startTime": "10:00:00",
+          "endTime": "19:00:00"
+        },
+        {
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 4,
+          "startTime": "11:00:00",
+          "endTime": "19:00:00"
+        },
+        {
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 5,
+          "startTime": "08:00:00",
+          "endTime": "18:00:00"
+        },
+        {
+          "comment PASCADA": "Sonntag",
+          "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+          "day": 6,
+          "startTime": "08:00:00",
+          "endTime": "11:00:00"
+        }
+      ],
+      "validFrom": "2025-01-13 14:00:01.195834"
+    },
+    {
+      "id": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "brand": "ESSO",
+      "address": {
+        "streetName": "BAB",
+        "streetNumber": "A3",
+        "latitude": 50.0960286,
+        "longitude": 8.3516582,
+        "postalCode": 65207,
+        "city": "Wiesbaden"
+      },
+      "prices": [
+        {
+          "name": "e5",
+          "price": 2.319
+        },
+        {
+          "name": "e10",
+          "price": 2.259
+        },
+        {
+          "name": "diesel",
+          "price": 2.199
+        }
+      ],
+      "openingTimes": [
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 0,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 1,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 2,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 3,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 4,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 5,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        },
+        {
+          "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+          "day": 6,
+          "startTime": "00:00:00",
+          "endTime": "23:59:00"
+        }
+      ],
+      "validFrom": "2025-01-10 14:00:01.195834"
+    }
+  ],
+  "complaint": [
+    {
+      "_id": 1,
+      "id": 1,
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "version": 1,
+      "fromDate": "2025-02-01 14:00:01.195834",
+      "complainType": "Falscher Super E5 Preis",
+      "message": "Zu dem gezeigten Preis kommt noch Steuer, daher Preis ist 1,779"
+    }
+  ],
+  "fuel-prices": [
+    {
+      "_id": 1,
+      "id": 1,
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "e5": 1.739,
+      "e10": 1.679,
+      "diesel": 1.679,
+      "validFrom": "2025-01-01 14:00:01.195834",
+      "validUntil": "2025-12-31 14:00:01.195834",
+      "firstDate": "2025-01-24 14:00:01.195834",
+      "lastDate": "2025-12-24 14:00:01.195834",
+      "importFile": "import1.csv"
+    },
+    {
+      "_id": 2,
+      "id": 2,
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "e5": 2.319,
+      "e10": 2.259,
+      "diesel": 2.199,
+      "validFrom": "2025-01-01 14:00:01.195834",
+      "validUntil": "2025-12-31 14:00:01.195834",
+      "firstDate": "2025-01-24 14:00:01.195834",
+      "lastDate": "2025-12-24 14:00:01.195834",
+      "importFile": "import2.csv"
+    }
+  ],
+  "openingTimes": [
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 0,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 1,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 2,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 3,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 4,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 5,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "day": 6,
+      "startTime": "07:00:00",
+      "endTime": "19:00:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 0,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 1,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 2,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 3,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 4,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 5,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "day": 6,
+      "startTime": "00:00:00",
+      "endTime": "23:59:00"
+    }
+  ],
+  "openingTimesOverride": [
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "override_type": "Weihnachten",
+      "startOfPeriod": "2025-12-24 14:00:01.195834",
+      "endOfPeriod": "2025-12-25 23:59:01.195834"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "override_type": "Weihnachten",
+      "startOfPeriod": "2025-12-24 14:00:01.195834",
+      "endOfPeriod": "2025-12-25 23:59:01.195834"
+    }
+  ],
+  "station": [
+    {
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "name": "ARAL",
+      "brand": "unknown",
+      "street": "Kirchhohl",
+      "streetNr": 15,
+      "houseNumber": "",
+      "postCode": 65207,
+      "place": "Wiesbaden",
+      "placen": "Wiesbaden",
+      "latitude": 50.1329283,
+      "longitude": 8.2973274,
+      "openingTimes": "07:00:00 - 19:00:00",
+      "version": 1,
+      "validFrom": "2025-01-13 16:04:01.195834",
+      "lastDate": "2125-01-13 16:04:01.195834",
+      "importFile": "import1.csv"
+    },
+    {
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "name": "ESSO",
+      "brand": "unknown",
+      "street": "BAB A3",
+      "streetNr": 3,
+      "houseNumber": "MEDENBACH WEST",
+      "postCode": 65207,
+      "place": "Wiesbaden",
+      "placen": "Wiesbaden",
+      "latitude": 50.0960286,
+      "longitude": 8.3516582,
+      "openingTimes": "00:00:00 - 23:59:00",
+      "version": 1,
+      "validFrom": "2025-01-10 16:04:01.195834",
+      "lastDate": "2125-01-12 16:04:01.195834",
+      "importFile": "import2.csv"
+    }
+  ],
+  "stationId": [
+    {
+      "_id": 1,
+      "stationId": "8bbb6c09-8165-4b8b-9b6b-c5cfe60bc9de",
+      "firstDate": "2025-01-13 16:04:01.195834"
+    },
+    {
+      "_id": 2,
+      "stationId": "637673e4-25ba-4a9b-8b22-9a8708031685",
+      "firstDate": "2025-01-13 16:05:01.195834"
+    }
+  ]
+}

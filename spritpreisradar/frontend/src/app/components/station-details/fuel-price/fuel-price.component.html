@@ -1,0 +1,19 @@
+<pas-card class="float-md-start">
+  <pas-card>
+    <h2>Spritpreise</h2>
+    <span>Gemeldet {{ prices.validFrom | timeFromNow }}</span><br>
+    <div class="d-flex">
+      <span>Diesel:</span>
+      <span class="ms-auto" ><spr-price [price]="prices.diesel" currency="€"/></span>
+    </div>
+    <div class="d-flex">
+      <span>Super E5:</span>
+      <span class="ms-auto" ><spr-price [price]="prices.e5" currency="€"/></span>
+    </div>
+    <div class="d-flex">
+      <span>Super E10:</span>
+      <span class="ms-auto" ><spr-price [price]="prices.e10" currency="€"/></span>
+    </div>
+  </pas-card>
+</pas-card>
+

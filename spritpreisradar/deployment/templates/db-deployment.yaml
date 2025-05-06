@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.db.app.name }}
+  labels:
+    name: {{ .Values.db.app.name }}
+spec:
+  replicas: {{ .Values.db.app.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.db.app.name }}
+      name: {{ .Values.db.app.name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Values.db.app.name }}
+        name: {{ .Values.db.app.name }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - name: db-data
+          persistentVolumeClaim:
+            claimName: {{.Values.db.app.pvcName}}
+      containers:
+        - name: {{ .Values.db.app.name }}
+          image: {{ .Values.db.app.image }}
+          volumeMounts:
+            - mountPath: "/var/lib/postgresql/data"
+              name: db-data
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_DB
+              value: {{ .Values.db.env.dbname }}
+            - name: POSTGRES_USER
+              value: {{ .Values.db.env.dbusername }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.db.env.dbpassword }}
+            # SPRIT-32 Ex. PV /opt/postgres-data/spritpreisradar-dev enthält eine DB mit einem anderen
+            # Passwort. Workaround: Mittels PG_DATA ein Unterverzeichnis darin für die Daten beziffern.
+            # Siehe https://hub.docker.com/_/postgres
+            - name: PGDATA
+              value: /var/lib/postgresql/data/{{ .Values.db.app.hostSubdir }}
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "300m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
+

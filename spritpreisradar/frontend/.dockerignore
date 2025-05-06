@@ -1,0 +1,22 @@
+# Folgende 10 Zeilen wären relevant, wenn der Build NICHT als Multi-Stage Docker Build erfolgt
+
+# Ignore everything
+#*
+
+# Allow directories
+#!/dist
+#!
+
+# Build erfolgt als Multi-Stage Docker Build
+# Somit müssen alle Quelldateien an den Build Context übergeben werden
+# node_modules: Wird im Docker Build über npm install gezogen
+# dist: Wird im Docker Build über npm build erstellt
+
+.angular
+.dockerignore
+.vscode
+dist
+Dockerfile
+node_modules
+npm-debug.log
+README.md

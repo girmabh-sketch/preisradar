@@ -1,0 +1,75 @@
+# Erst alle Images bauen:
+#   docker-compose build
+# Dann kann der Cluster hochgefahren werden
+#   docker-compose up -d
+
+services:
+
+  db:
+    image: registry.gitlab.pascada.net/inhouse/infrastructure/trusted-container-image/postgres:v1.17-b1
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    #volumes:
+    #  - ./postgres/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+    environment:
+      #POSTGRES_HOST: host.docker.internal
+      POSTGRES_USER: pascada
+      POSTGRES_PASSWORD: geheim
+      POSTGRES_DB: spritpreisradar
+    #ports:
+    #  - "5433:5432"
+    expose:
+      - "5432"
+
+  # Ansteuern mit http://localhost:50113/?pgsql=portal-db&username=pascada&db=demo
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 60113:8080
+    links:
+      - db
+
+  # Achtung: Der Service-Name 'spritpreisradar-backend-service' wird in frontend/Dockerfile-nginx.conf verwendet.
+  # Achtung 2: Damit nginx.conf im Frontend-Image sowohl in Docker Compose als auch minikube funktioniert, muss
+  # der Service überall gleich heißen.
+  spritpreisradar-backend-service:
+    build:
+      context: backend/.
+    image: registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/backend:master
+    environment:
+      PORT: 60111
+      DB_HOST: db
+      DB_DATABASE: spritpreisradar
+      DB_USERNAME: pascada
+      DB_PASSWORD: geheim
+    #env_file:
+    #  - backend-nestjs/.env
+    #ports:
+    #  - "60111:60111"
+    expose:
+      - "60111"
+    links:
+      - db
+
+  frontend:
+    build:
+      context: frontend/.
+    image: registry.gitlab.pascada.net/customer/smf/petrolpricealarm/spritpreisradar/frontend:master
+    restart: always
+    ports:
+      - "60110:80"
+    links:
+      - spritpreisradar-backend-service
+    # set shared memory limit when using docker-compose
+    shm_size: 128mb
+    environment:
+      production: false

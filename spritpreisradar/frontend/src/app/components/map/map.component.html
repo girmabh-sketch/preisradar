@@ -1,0 +1,66 @@
+<pas-card>
+  <div style="height: 13rem">
+    <aol-map [logo]="false">
+      <aol-interaction-default></aol-interaction-default>
+      <aol-view [zoom]="zoom">
+        <aol-coordinate srid="EPSG:4326"
+                        [x]="adresse.longitude"
+                        [y]="adresse.latitude"></aol-coordinate>
+      </aol-view>
+      <aol-layer-tile [opacity]="opacity">
+        <aol-source-osm></aol-source-osm>
+      </aol-layer-tile>
+      <aol-layer-vector [opacity]="opacity">
+        <aol-source-vector>
+          <aol-feature>
+            <aol-geometry-point>
+              <aol-coordinate srid="EPSG:4326"
+                              [x]="adresse.longitude"
+                              [y]="adresse.latitude"></aol-coordinate>
+            </aol-geometry-point>
+            <aol-style>
+              <aol-style-circle [radius]="10">
+                <aol-style-stroke color="black"></aol-style-stroke>
+                <aol-style-fill color="green"></aol-style-fill>
+              </aol-style-circle>
+            </aol-style>
+          </aol-feature>
+          <aol-feature>
+            <aol-geometry-point>
+              <aol-coordinate srid="EPSG:4326"
+                              [x]="adresse.longitude"
+                              [y]="adresse.latitude"></aol-coordinate>
+            </aol-geometry-point>
+            <aol-style>
+              <aol-style-icon anchorOrigin="top-left"
+                              anchorXUnits="fraction"
+                              anchorYUnits="fraction"
+                              [anchor]="[0.5, 1]"
+                              [scale]="0.1"
+                              [src]="markerImage">
+              </aol-style-icon>
+            </aol-style>
+          </aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+      <aol-control>
+        <aol-content>
+          <div *ngIf="showControlsZoom">
+            <div class="ol-zoom ol-unselectable ol-control">
+              <button (click)="increaseZoom()"
+                      [attr.title]="titleZoomIn"
+                      class="ol-zoom-in">
+                +
+              </button>
+              <button (click)="decreaseZoom()"
+                      [attr.title]="titleZoomOut"
+                      class="ol-zoom-out">
+                −
+              </button>
+            </div>
+          </div>
+        </aol-content>
+      </aol-control>
+    </aol-map>
+  </div>
+</pas-card>

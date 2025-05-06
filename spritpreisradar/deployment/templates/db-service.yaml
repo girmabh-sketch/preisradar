@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.db.app.servicename }}
+  labels:
+    name: {{ .Values.db.app.servicename }}
+spec:
+  selector:
+    name: {{ .Values.db.app.name }}
+  ports:
+  - name: {{ .Values.db.app.servicename }}
+    port: {{ .Values.db.app.servicePort }}
+    targetPort: 5432

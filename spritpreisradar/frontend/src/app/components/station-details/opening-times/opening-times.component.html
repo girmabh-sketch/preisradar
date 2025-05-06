@@ -1,0 +1,24 @@
+<pas-card class="float-md-end">
+  <h2>Öffnungszeiten</h2>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-sm-start text-nowrap">Heute:</div>
+    <div class="col-sm-8 text-nowrap shadow-none">{{ openingTimes[currentWeekDayMobilithek].startTime }}
+      - {{ openingTimes[currentWeekDayMobilithek].endTime }} Uhr</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-4 text-sm-start text-nowrap">Werktags:</div>
+    <div class="col-sm-8 text-nowrap shadow-none">{{ openingTimes[0].startTime }} - {{ openingTimes[0].endTime }} Uhr</div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4 text-sm-start text-nowrap">Samstags:</div>
+    <div class="col-sm-8 text-nowrap shadow-none">{{ openingTimes[5].startTime }} - {{ openingTimes[5].endTime }} Uhr</div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4 text-sm-start text-nowrap">Sonntags:</div>
+    <div class="col-sm-8 text-nowrap shadow-none">{{ openingTimes[6].startTime }} - {{ openingTimes[6].endTime }} Uhr</div>
+  </div>
+</pas-card>

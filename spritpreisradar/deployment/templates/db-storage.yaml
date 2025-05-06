@@ -1,0 +1,12 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Values.db.app.pvName}}
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{.Values.db.app.storageSize}}
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: {{.Values.db.app.hostPath}}
